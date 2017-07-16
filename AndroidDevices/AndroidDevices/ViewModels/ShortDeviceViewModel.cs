@@ -1,12 +1,12 @@
-﻿using AndroidDevices.Models;
+﻿using Managed.Adb;
 
 namespace AndroidDevices.ViewModels
 {
-    public class DeviceViewModel
+    public class ShortDeviceViewModel
     {
         private readonly Device _model;
 
-        public DeviceViewModel(Device model)
+        public ShortDeviceViewModel(Device model)
         {
             _model = model;
         }
@@ -18,12 +18,7 @@ namespace AndroidDevices.ViewModels
 
         public string DeviceType
         {
-            get { return _model.DeviceType; }
-        }
-
-        public string NameToShow
-        {
-            get { return _model.SerialNumber + " (" + _model.DeviceType + ")"; }
+            get { return _model.IsEmulator ? "Emulator" : "Device"; }
         }
     }
 }

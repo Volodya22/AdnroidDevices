@@ -1,36 +1,49 @@
 ﻿using System.Collections.ObjectModel;
-using AndroidDevices.Models;
+using System.Configuration;
+using DeviceData;
+using Managed.Adb;
 
 namespace AndroidDevices.ViewModels
 {
     public class DevicesListViewModel : BaseViewModel
     {
+        private readonly IDeviceManager _deviceManager;
+
         public DevicesListViewModel()
         {
-            Devices = new ObservableCollection<DeviceViewModel>();
+            Devices = new ObservableCollection<ShortDeviceViewModel>();
+            _deviceManager = ServiceManager.Instance.GetDeviceManager();
 
             GetDevices();
         }
 
-        public ObservableCollection<DeviceViewModel> Devices { get; set; }
+        public ObservableCollection<ShortDeviceViewModel> Devices { get; set; }
 
         public void GetDevices()
         {
             Devices.Clear();
 
-            while (Devices.Count < 3)
+            var devices = _deviceManager.GetDevices(ConfigurationManager.AppSettings["AdbPath"]);
+
+            if (devices.Count == 0)
             {
-                Devices.Add(GetDeviceTemplate());
+                while (Devices.Count < 3)
+                {
+                    Devices.Add(GetDeviceTemplate());
+                }
+            }
+            else
+            {
+                foreach (var device in devices)
+                {
+                    Devices.Add(new ShortDeviceViewModel(device));
+                }
             }
         }
 
-        private DeviceViewModel GetDeviceTemplate()
+        private ShortDeviceViewModel GetDeviceTemplate()
         {
-            return new DeviceViewModel(new Device
-            {
-                SerialNumber = "123",
-                DeviceType = "Emulator"
-            });
+            return new ShortDeviceViewModel(new Device("SerialNumber", DeviceState.Online, "ModelTemplate", "ProductTemplate", "DeviceTemplate"));
         }
     }
 }
