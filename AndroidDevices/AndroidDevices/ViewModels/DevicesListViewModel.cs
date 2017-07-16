@@ -1,5 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Configuration;
+using System.Linq;
 using DeviceData;
 using Managed.Adb;
 
@@ -11,13 +13,13 @@ namespace AndroidDevices.ViewModels
 
         public DevicesListViewModel()
         {
-            Devices = new ObservableCollection<ShortDeviceViewModel>();
+            Devices = new ObservableCollection<DeviceViewModel>();
             _deviceManager = ServiceManager.Instance.GetDeviceManager();
 
             GetDevices();
         }
 
-        public ObservableCollection<ShortDeviceViewModel> Devices { get; set; }
+        public ObservableCollection<DeviceViewModel> Devices { get; set; }
 
         public void GetDevices()
         {
@@ -36,14 +38,14 @@ namespace AndroidDevices.ViewModels
             {
                 foreach (var device in devices)
                 {
-                    Devices.Add(new ShortDeviceViewModel(device));
+                    Devices.Add(new DeviceViewModel(device));
                 }
             }
         }
 
-        private ShortDeviceViewModel GetDeviceTemplate()
+        private DeviceViewModel GetDeviceTemplate()
         {
-            return new ShortDeviceViewModel(new Device("SerialNumber", DeviceState.Online, "ModelTemplate", "ProductTemplate", "DeviceTemplate"));
+            return new DeviceViewModel();
         }
     }
 }

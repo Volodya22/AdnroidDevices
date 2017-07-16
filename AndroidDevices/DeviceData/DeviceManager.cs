@@ -13,7 +13,7 @@ namespace DeviceData
 
             var devices = AdbHelper.Instance.GetDevices(AndroidDebugBridge.SocketAddress).ToList();
 
-            madb.Stop();
+            //madb.Stop();
 
             return devices;
         }

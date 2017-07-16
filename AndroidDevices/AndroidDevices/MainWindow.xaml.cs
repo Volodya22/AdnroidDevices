@@ -12,7 +12,7 @@ namespace AndroidDevices
         {
             InitializeComponent();
 
-            MainContent.Content = new MainContentControl(new DevicesListViewModel());
+            MainContent.Content = new MainContentControl();
         }
     }
 }

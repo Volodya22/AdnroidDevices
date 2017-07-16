@@ -4,11 +4,57 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:AndroidDevices.Views"
+      xmlns:dv="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+      xmlns:dvc="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
       Title="DeviceStatsView">
 
-    <Grid>
-        
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0">Model:</TextBlock>
+        <TextBlock Grid.Row="0" Grid.Column="1" Margin="10 0 0 0" Text="{Binding Model}"></TextBlock>
+
+        <TextBlock Grid.Row="1" Grid.Column="0">Manufacturer:</TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="1" Margin="10 0 0 0" Text="{Binding Manufacturer}"></TextBlock>
+
+        <TextBlock Grid.Row="2" Grid.Column="0">OS version:</TextBlock>
+        <TextBlock Grid.Row="2" Grid.Column="1" Margin="10 0 0 0" Text="{Binding OSVersion}"></TextBlock>
+
+        <TextBlock Grid.Row="3" Grid.Column="0">Available space:</TextBlock>
+        <TextBlock Grid.Row="3" Grid.Column="1" Margin="10 0 0 0" Text="{Binding AvailableSpace}"></TextBlock>
+
+        <dvc:Chart Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 15" BorderThickness="0">
+            <dvc:Chart.Series>
+                <dvc:ColumnSeries ItemsSource="{Binding BatteryValue}" IndependentValueBinding="{Binding Key}"
+                               DependentValueBinding="{Binding Value}">
+                </dvc:ColumnSeries>
+            </dvc:Chart.Series>
+        </dvc:Chart>
+
+        <dvc:Chart Name="PieChart" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 15" BorderThickness="0">
+            <dvc:Chart.Series>
+                <dvc:PieSeries ItemsSource="{Binding StorageInfo}" IndependentValueBinding="{Binding Key}" 
+                               DependentValueBinding="{Binding Value}"></dvc:PieSeries>
+            </dvc:Chart.Series>
+        </dvc:Chart>
+
+        <Button Name="BtBack" Grid.Row="6" Grid.Column="0" 
+                Width="75" Click="BtBack_OnClick">Back</Button>
+        <Button Name="BtExit" Grid.Row="6" Grid.Column="1" Width="75" 
+                HorizontalAlignment="Right" Click="BtExit_OnClick">Exit</Button>
     </Grid>
 </Page>

@@ -9,13 +9,10 @@ namespace AndroidDevices.Navigation
     {
         private readonly NavigationService _navigationService;
         private static NavigationManager _instanse;
-        private readonly DevicesListView _listView;
 
-        private NavigationManager(NavigationService navigationService, DevicesListView listView)
+        private NavigationManager(NavigationService navigationService)
         {
             _navigationService = navigationService;
-
-            _listView = listView;
         }
 
         public static NavigationManager Instanse
@@ -26,9 +23,9 @@ namespace AndroidDevices.Navigation
             }
         }
 
-        public static void CreateNavigationManager(NavigationService mainFrameService, DevicesListView listView)
+        public static void CreateNavigationManager(NavigationService mainFrameService)
         {
-            _instanse = new NavigationManager(mainFrameService, listView);
+            _instanse = new NavigationManager(mainFrameService);
         }
 
         private object GetNavigateObject(object obj)
@@ -37,13 +34,13 @@ namespace AndroidDevices.Navigation
             {
                 return new DevicesListView { DataContext = obj };
             }
-            if (obj is DeviceStatsViewModel)
+            if (obj is DeviceViewModel)
             {
                 return new DeviceStatsView { DataContext = obj };
             }
             else
             {
-                throw new ArgumentException("Некорректный параметр навигации");
+                throw new ArgumentException("Incorrect navigation parameter!");
             }
         }
 
@@ -52,11 +49,6 @@ namespace AndroidDevices.Navigation
             var navigatedObject = GetNavigateObject(target);
 
             _navigationService.Navigate(navigatedObject);
-        }
-
-        public void NavigateToList()
-        {
-            _navigationService.Navigate(_listView);
         }
     }
 }

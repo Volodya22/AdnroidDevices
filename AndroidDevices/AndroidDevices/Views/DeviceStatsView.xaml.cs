@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using AndroidDevices.Navigation;
+using AndroidDevices.ViewModels;
 
 namespace AndroidDevices.Views
 {
@@ -23,6 +14,17 @@ namespace AndroidDevices.Views
         public DeviceStatsView()
         {
             InitializeComponent();
+        }
+
+        private void BtBack_OnClick(object sender, RoutedEventArgs e)
+        {
+            NavigationManager.Instanse.Navigate(new DevicesListViewModel());
+        }
+
+        private void BtExit_OnClick(object sender, RoutedEventArgs e)
+        {
+            Application.Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+            Application.Current.Shutdown();
         }
     }
 }

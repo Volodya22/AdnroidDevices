@@ -9,14 +9,14 @@ namespace AndroidDevices
     /// </summary>
     public partial class MainContentControl
     {
-        public MainContentControl(DevicesListViewModel list)
+        public MainContentControl()
         {
             InitializeComponent();
 
-            var listView = new DevicesListView { DataContext = list };
+            var listViewModel = new DevicesListViewModel();
 
-            NavigationManager.CreateNavigationManager(NavigationService, listView);
-            NavigationManager.Instanse.NavigateToList();
+            NavigationManager.CreateNavigationManager(NavigationService);
+            NavigationManager.Instanse.Navigate(listViewModel);
         }
     }
 }
